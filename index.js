@@ -41,6 +41,9 @@ app.get("/",(req,res)=>{
 app.get("/about-us",(req,res)=>{
     res.send(`Hello from ${req.query.name}`)
 })
+app.get("/contact-us",(req,res)=>{
+    res.send("i am ayush")
+})
 app.listen(port,()=>{
     console.log("server started");
     
