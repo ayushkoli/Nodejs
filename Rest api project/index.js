@@ -112,7 +112,7 @@ app.patch("/api/users/:id",(req,res)=>{
     const user=users.find(user=>user.id===id)
     Object.assign(user,body)
     fs.writeFile("./MOCK_DATA.json",JSON.stringify(users),(error)=>{
-        res.json({message:"suceess",id:user.id})
+        res.json({message:"suceess",    })
     })
 
 })
@@ -124,7 +124,7 @@ app.delete("/api/users/:id",(req,res)=>{
     const index=users.findIndex(user=>user.id===id)
     const deleteduser=users.splice(index,1)
     fs.writeFile("./MOCK_DATA.json",JSON.stringify(users),(error)=>{
-        res.json({message:"user deleted",id:id})
+        res.json({message:"user deleted",id:id,user:deleteduser})
     })
 
 })
