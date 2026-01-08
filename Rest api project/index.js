@@ -41,7 +41,7 @@ app.post("/api/users", (req, res) => {
       res.json({ message: "error" });
     }
 
-    res.json({ message: "sucess", user:user });
+    res.json({ message: "sucess", user: user });
   });
 });
 
@@ -52,7 +52,7 @@ app.patch("/api/users/:id", (req, res) => {
   const user = users.find((user) => user.id === id);
   Object.assign(user, body); //update users's user
   fs.writeFile("./MOCK_DATA.json", JSON.stringify(users), (error) => {
-    res.json({ message: "suceess" ,user:user});
+    res.json({ message: "suceess", user: user });
   });
 });
 
