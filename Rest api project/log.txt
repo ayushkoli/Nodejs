@@ -3,3 +3,7 @@
 1767953077849 : POST , /api/users 
 1767953081199 : PATCH , /api/users/1007 
 1767953084041 : DELETE , /api/users/1007 
+1767987430718 : GET , /api/users  
+1767987452484 : GET , /api/users  
+1767987480656 : GET , /api/users  
+1767987498483 : GET , /api/users  
