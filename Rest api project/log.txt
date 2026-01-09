@@ -1,1 +1,5 @@
-
+1767953069980 : GET , /api/users 
+1767953074726 : GET , /api/users/1007 
+1767953077849 : POST , /api/users 
+1767953081199 : PATCH , /api/users/1007 
+1767953084041 : DELETE , /api/users/1007 
