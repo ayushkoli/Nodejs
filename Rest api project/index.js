@@ -14,6 +14,15 @@ app.use(express.json());
 //MIDDLEWEAR
 app.use(express.urlencoded({ extended: true }));
 
+app.use((req,res,next)=>{
+    fs.appendFile("log.txt", `${Date.now()} : ${req.method} , ${req.path}  \n`,(error)=>{
+
+    });
+
+  next()
+})
+
+
 //GET all users
 app.get("/api/users", (req, res) => {
   res.json(users);
