@@ -49,7 +49,7 @@ const User = mongoose.model("user", userSchema);
 app.use(express.json());
 
 //MIDDLEWEAR
-app.use(express.urlencoded({ extended: true }));
+  app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {    //MIDDLEWARE
   fs.appendFile(
