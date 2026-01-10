@@ -53,7 +53,7 @@ app.post("/api/users", (req, res) => {
       res.json({ message: "error" });
     }
 
-    res.json({ message: "sucess", user: user });
+    res.status(201).json({ message: "sucess", user: user });
   });
 });
 
