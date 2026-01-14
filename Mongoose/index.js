@@ -34,6 +34,7 @@ const userSchema = mongoose.Schema({
 //User Model to interact with mongodb
 const Users = mongoose.model("users", userSchema);
 
+
 //Create
 app.post("/users", async (req, res) => {
   const user = await Users.create(req.body);

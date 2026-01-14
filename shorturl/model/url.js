@@ -1,10 +1,28 @@
 const mongoose=require("mongoose")
 
-const urlSchema= mongoose.Schema({
-    shortId:{
-        type:String,
-        required:true,
-        unique:true
-    }
+const dbschema=mongoose.Schema(
+    {
+        shortId:{
+            type:String,
+            required:true,
+            unique:true,
+        },
+        redirectURL:{
+            type:String,
+            required:true
+        },
+        visits:[
+            {
+                time:{
+                    type:Number
+                }
+            }
+        ]
 
-})
+    }
+)
+
+const URL=mongoose.model("URL",dbschema)
+
+
+module.exports=URL;
