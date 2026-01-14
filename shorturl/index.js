@@ -1,9 +1,13 @@
 const express=require("express");
 const mongoconnection=require("./config/connectdb")
+const router = require("./routes/urlroutes");
+
 const app=express()
 const port=8000;
-const URL=require("./model/url")
+
 mongoconnection("mongodb://127.0.0.1:27017/shorturl");
+
+app.use("/url",router);
 
 
 app.use(express.json())
