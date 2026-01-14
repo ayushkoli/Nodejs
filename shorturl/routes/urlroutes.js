@@ -1,8 +1,15 @@
-const express=require("express")
-const router=express.Router()
-const URL = require("../model/url");
+const express = require("express");
+const router = express.Router();
 
-router.post("/",(req,res)=>{
-    res.json({message:"working"})
-})
+const { makeurl, geturl, analystics } = require("../controller/controller");
+
+// Create short URL
+router.post("/", makeurl);
+
+// Redirect to original URL using short URL
+router.get("/:shorturl", geturl);
+
+// Get analytics for a short URL
+router.get("/analytics/:shorturl", analystics);
+
 module.exports = router;

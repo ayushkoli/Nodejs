@@ -1,28 +1,24 @@
-const mongoose=require("mongoose")
-
-const dbschema=mongoose.Schema(
+const mongoose = require("mongoose");
+// never change ur schema mid project
+const dbschema = mongoose.Schema({
+  shortID: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  redirectURL: {
+    type: String,
+    required: true,
+  },
+  visits: [
     {
-        shortId:{
-            type:String,
-            required:true,
-            unique:true,
-        },
-        redirectURL:{
-            type:String,
-            required:true
-        },
-        visits:[
-            {
-                time:{
-                    type:Number
-                }
-            }
-        ]
+      time: {
+        type: Number,
+      },
+    },
+  ],
+});
 
-    }
-)
+const URL = mongoose.model("URL", dbschema);
 
-const URL=mongoose.model("URL",dbschema)
-
-
-module.exports=URL;
+module.exports = URL;
