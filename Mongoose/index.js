@@ -1,12 +1,11 @@
 const express = require("express");
-const app=express();
+const app = express();
 const mongoose = require("mongoose");
 const port = 8000;
 
 //MIDDLEWARES
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 
 //MONGODB CONNECTION
 mongoose
