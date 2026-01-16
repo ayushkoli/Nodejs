@@ -3,6 +3,7 @@ const URL = require("../model/url");          // URL mongoose model
 const { nanoid } = require("nanoid");         // unique ID generator
 
 const makeurl = async (req, res) => {
+  const allurl = await URL.find({});
   const url = req.body.url;                   // original URL from request
   const shorturl = nanoid(8);                 // generate short ID
 
@@ -13,7 +14,10 @@ const makeurl = async (req, res) => {
   });
   const link =`http://localhost:8000/url/${shorturl}`
 
-  res.json({ message: "shorturl created" ,shorturl:link});  // success response
+  res.render("home",{
+    id:shorturl,
+    urls:allurl
+  })
 };
 
 const geturl = async (req, res) => {
@@ -48,5 +52,13 @@ const analystics = async (req, res) => {
   res.json({ site: entry.redirectURL, visits: visit });
 };
 
+const homepage = async(req, res) => {
+  const allurl= await URL.find({})
+  res.render("home",{
+    urls:allurl
+  }
+  );
+};
 
-module.exports = { makeurl, geturl ,analystics};         // export controllers
+
+module.exports = { makeurl, geturl ,analystics,homepage};         // export controllers
