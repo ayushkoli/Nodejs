@@ -3,7 +3,11 @@ const path=require("path")
 const mongoconnection = require("./config/connectdb");
 const router = require("./routes/urlroutes");
 const staticrouter=require("./routes/staticrouter")
+const userRoute=require("./routes/user")
 const URL=require("./model/url")
+
+const cookieParser=require("cookie-parser");
+const restricttoLoggesinuseronly = require("./middlewares/auth");
 
 const app = express();
 const port = 8000;
@@ -18,13 +22,15 @@ app.set("views", path.resolve("./views"))
 // MIDDLEWARE
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 
 
 // Route handler for URL-related APIs
 // Must be placed after middleware
-app.use("/url", router);
+app.use("/url",restricttoLoggesinuseronly, router);
 app.use("/",staticrouter)
+app.use("/user",userRoute)
 
 
 
