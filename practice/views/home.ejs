@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- User Header -->
+        <div class="user-header">
+            <h1>Welcome, <%= user.name %>
+            </h1>
+            <p class="user-email">
+                <%= user.email %>
+            </p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Create Post Section -->
+        <section class="create-section">
+            <h2>Create Post</h2>
+            <form action="/posts" method="POST">
+                <input type="text" name="title" placeholder="Post title" required />
+                <textarea name="content" placeholder="What's on your mind?" required></textarea>
+                <button type="submit">Publish Post</button>
+            </form>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Posts Section -->
+        <section class="posts-section">
+            <h2>Your Posts</h2>
+
+            <% if (posts.length===0) { %>
+                <div class="empty-state">
+                    <p>No posts yet. Create your first post above!</p>
+                </div>
+                <% } else { %>
+                    <div class="posts-grid">
+                        <% posts.forEach(post=> { %>
+                            <article class="post">
+                                <h3>
+                                    <%= post.title %>
+                                </h3>
+                                <p>
+                                    <%= post.content %>
+                                </p>
+                            </article>
+                            <% }) %>
+                    </div>
+                    <% } %>
+        </section>
+        <section class="posts-section">
+            <h2>All Posts</h2>
+        
+            <% if (allpost.length===0) { %>
+                <div class="empty-state">
+                    <p>No posts yet</p>
+                </div>
+                <% } else { %>
+                    <div class="posts-grid">
+                        <% allpost.forEach(post=> { %>
+                            <article class="post">
+        
+                                <h3>
+                                    <%= post.title %>
+                                </h3>
+        
+                                <p>
+                                    <%= post.content %>
+                                </p>
+        
+                                <!-- Author Info -->
+                                <div class="post-author">
+                                    <small>
+                                        Posted by
+                                        <strong>
+                                            <%= post.userId.name %>
+                                        </strong>
+                                        (<%= post.userId.email %>)
+                                    </small>
+                                </div>
+        
+                            </article>
+                            <% }) %>
+                    </div>
+                    <% } %>
+        </section>
+
+
+        <!-- Logout -->
+        <div class="logout">
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+</body>
+
+</html>
