@@ -1,37 +1,39 @@
-require("dotenv").config();
+require("dotenv").config(); // Load environment variables
 
 const express = require("express");
 const connect = require("./config/connectdb");
-const cookieParse = require("cookie-parser");
-const authRoutes = require("./routes/authroutes");
-const postRoutes = require("./routes/postroutes");
-const Post = require("./models/post");
-const authmiddleware = require("./middlewares/auth");
+const cookieParser = require("cookie-parser");
+
+const authRoutes = require("./routes/authroutes"); // Auth routes
+const postRoutes = require("./routes/postroutes"); // Post routes
+
+const Post = require("./models/post"); // Post model
+const authMiddleware = require("./middlewares/auth"); // Auth check middleware
+
 const app = express();
 const port = 8000;
-connect("mongodb://127.0.0.1:27017/practice");
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+connect("mongodb://127.0.0.1:27017/practice"); // MongoDB connection
 
-app.set("view engine", "ejs");
-app.set("views", "views");
+app.use(express.json()); // Parse JSON body
+app.use(express.urlencoded({ extended: true })); // Parse form data
 
-app.use(cookieParse());
-app.use(express.static("public"));
-app.use("/auth", authRoutes);
-app.use("/posts", postRoutes);
+app.set("view engine", "ejs"); // Template engine
+app.set("views", "views"); // Views folder
 
-app.get("/home", authmiddleware, async (req, res) => {
+app.use(cookieParser()); // Read cookies
+app.use(express.static("public")); // Static files
+
+app.use("/auth", authRoutes); // Auth routes
+app.use("/posts", postRoutes); // Post routes
+
+app.get("/home", authMiddleware, async (req, res) => {
   try {
-    const allpost = await Post.find().populate("userId", "name email");
-
-    const posts = await Post.find({ userId: req.user._id });
+    const allPost = await Post.find().populate("userId", "name email"); // Add user info to posts
 
     res.render("home", {
       user: req.user,
-      posts: posts, 
-      allpost:allpost,
+      allpost: allPost,
     });
   } catch (error) {
     console.log(error);
@@ -40,15 +42,27 @@ app.get("/home", authmiddleware, async (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-  res.clearCookie("token");
-  return res.redirect("/login");
+  res.clearCookie("token"); // Remove auth token
+  res.redirect("/login");
 });
+
 app.get("/signup", (req, res) => {
-  res.render("signup");
+  res.render("signup"); // Signup page
+});
+
+app.get("/mypost", authMiddleware, async (req, res) => {
+  const posts = await Post.find({ userId: req.user._id }); // User posts
+
+  res.render("mypost", {
+    user: req.user,
+    posts,
+  });
 });
 
 app.get("/login", (req, res) => {
-  res.render("login");
+  res.render("login"); // Login page
 });
 
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`); // Server start
+});
